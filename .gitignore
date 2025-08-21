@@ -1,0 +1,24 @@
+# JetBrain
+.idea/
+.run/
+
+# Visual Studio Code
+.vscode/
+.history
+
+# Vim
+*~
+*.swp
+*.swo
+
+# Environment variable files
+.env
+.env*
+!.env.example
+
+# Moonrepo
+.moon/cache
+.moon/docker
+
+# Build files
+bin/
