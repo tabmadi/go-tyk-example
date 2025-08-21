@@ -33,6 +33,8 @@ linters:
     - lll # golines is better
     - nlreturn # wsl_v5 is better
     - wsl # wsl_v5 is better
+    - exhaustruct # it's too much
+    - mnd # we have default values in config file
 
   settings:
     govet:

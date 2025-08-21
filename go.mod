@@ -1,4 +1,3 @@
-// TODO: Replace with your own module path (e.g., github.com/yourusername/yourproject)
-module github.com/xurvan/go-template
+module github.com/tab-sama/go-tyk-template
 
-go 1.24.5
+go 1.24.6

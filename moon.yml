@@ -40,12 +40,12 @@ tasks:
       CGO_ENABLED: '0'
       GOOS: 'linux'
       GOARCH: 'amd64'
-    script: 'go build -ldflags="-s -w" -trimpath -o bin/app cmd/app/main.go'
+    script: 'go build -ldflags="-s -w" -trimpath -o bin/server cmd/server/main.go'
     inputs:
       - '@group(sources)'
     outputs:
-      - 'bin/app'
+      - 'bin/server'
   run:
-    script: 'go run ./cmd/app'
+    script: 'go run ./cmd/server'
     options:
       envFile: true

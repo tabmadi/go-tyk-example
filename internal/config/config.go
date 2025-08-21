@@ -1,35 +1,19 @@
-// Package config manages application configuration with environment variable support.
+// Package config provides configuration management.
 package config
 
-import (
-	"log/slog"
-	"os"
-	"strings"
-)
+import "time"
 
-// Config holds application configuration settings including logging.
+// Config holds server configuration settings.
 type Config struct {
-	LogLevel slog.Level
+	ListenAddress string
+	TimeOut       time.Duration
 }
 
-// New creates a Config with default settings and optional LOG_LEVEL env override (DEBUG/INFO/WARN/ERROR).
-func New() *Config {
+// Load initializes and returns a Config instance with default values.
+func Load() *Config {
 	cfg := &Config{
-		LogLevel: slog.LevelInfo, // Default log level
-	}
-
-	// Check for LOG_LEVEL environment variable
-	if logLevel := os.Getenv("LOG_LEVEL"); logLevel != "" {
-		switch strings.ToUpper(logLevel) {
-		case "DEBUG":
-			cfg.LogLevel = slog.LevelDebug
-		case "INFO":
-			cfg.LogLevel = slog.LevelInfo
-		case "WARN":
-			cfg.LogLevel = slog.LevelWarn
-		case "ERROR":
-			cfg.LogLevel = slog.LevelError
-		}
+		ListenAddress: "localhost:8080",
+		TimeOut:       time.Second * 15,
 	}
 
 	return cfg
