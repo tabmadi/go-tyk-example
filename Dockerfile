@@ -1,23 +1,16 @@
-FROM debian:bookworm AS builder
-
-RUN apt-get update
-RUN apt-get install curl xz-utils -y
-RUN curl -fsSL https://moonrepo.dev/install/proto.sh | bash -s -- --yes
-
-ENV PATH="/root/.proto/bin:$PATH"
+FROM golang:1.24.6-alpine AS builder
 
 WORKDIR /app
 
 COPY . .
 
-RUN proto install
-RUN moon run :build
+RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -trimpath -o bin/server cmd/server/main.go
 
-FROM alpine:latest
+FROM alpine:3.19
 
-WORKDIR /root/
+WORKDIR /app
 
-COPY --from=builder /app/bin/server .
+COPY --from=builder /app/bin/server /app/
 
 EXPOSE 8080
 
