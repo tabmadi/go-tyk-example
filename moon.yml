@@ -45,6 +45,13 @@ tasks:
       - '@group(sources)'
     outputs:
       - 'bin/server'
+  docker-build:
+    deps:
+      - 'build'
+    script: 'docker build -t go-webservice .'
+    inputs:
+      - 'Dockerfile'
+      - '@group(sources)'
   run:
     script: 'go run ./cmd/server'
     options:
