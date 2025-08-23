@@ -18,6 +18,7 @@ services:
     container_name: tyk-gateway
     ports:
       - "8888:8080"
+      - "9696:9696"
     environment:
       - TYK_GW_SECRET=352d20ee67be67f6340b4c0605b044b7
       - TYK_GW_STORAGE_TYPE=redis
@@ -38,7 +39,7 @@ services:
     networks:
       - tyk-network
     healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:8080/hello"]
+      test: ["CMD", "curl", "-f", "http://localhost:9696/hello"]
       interval: 30s
       timeout: 10s
       retries: 3
