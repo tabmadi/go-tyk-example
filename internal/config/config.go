@@ -12,7 +12,7 @@ type Config struct {
 // Load initializes and returns a Config instance with default values.
 func Load() *Config {
 	cfg := &Config{
-		ListenAddress: "localhost:8080",
+		ListenAddress: "0.0.0.0:8080",
 		TimeOut:       time.Second * 15,
 	}
 
