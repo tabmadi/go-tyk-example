@@ -44,11 +44,6 @@ services:
       - "8080:8080"
     networks:
       - tyk-network
-    healthcheck:
-      test: [ "CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/ping" ]
-      interval: 5s
-      timeout: 3s
-      retries: 10
     restart: unless-stopped
 
 networks:

@@ -1,17 +1,9 @@
-FROM golang:1.24.6-alpine AS builder
+FROM alpine:3.22
 
 WORKDIR /app
 
-COPY . .
-
-RUN CGO_ENABLED=0 GOOS=linux go build -ldflags="-s -w" -trimpath -o bin/server cmd/server/main.go
-
-FROM alpine:3.19
-
-WORKDIR /app
-
-COPY --from=builder /app/bin/server /app/
+COPY bin/server /app/server
 
 EXPOSE 8080
 
-CMD ["./server"]
+CMD ["/app/server"]
