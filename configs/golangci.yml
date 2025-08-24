@@ -34,7 +34,8 @@ linters:
     - nlreturn # wsl_v5 is better
     - wsl # wsl_v5 is better
     - exhaustruct # it's too much
-    - mnd # we have default values in config file
+    - mnd # we have default values in our config file
+    - wrapcheck # when we use Fiber we cant wrap errors
 
   settings:
     govet:
