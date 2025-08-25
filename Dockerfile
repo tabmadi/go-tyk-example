@@ -2,8 +2,8 @@ FROM alpine:3.22
 
 WORKDIR /app
 
-COPY bin/server /app/server
+COPY bin/api /app/api
 
 EXPOSE 8080
 
-CMD ["/app/server"]
+CMD ["/app/api"]

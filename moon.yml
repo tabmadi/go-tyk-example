@@ -40,11 +40,11 @@ tasks:
       CGO_ENABLED: '0'
       GOOS: 'linux'
       GOARCH: 'amd64'
-    script: 'go build -ldflags="-s -w" -trimpath -o bin/server cmd/server/main.go'
+    script: 'go build -ldflags="-s -w" -trimpath -o bin/api cmd/api/main.go'
     inputs:
       - '@group(sources)'
     outputs:
-      - 'bin/server'
+      - 'bin/api'
   docker-build:
     deps:
       - 'build'
@@ -53,6 +53,6 @@ tasks:
       - 'Dockerfile'
       - '@group(sources)'
   run:
-    script: 'go run ./cmd/server'
+    script: 'go run ./cmd/api'
     options:
       envFile: true
