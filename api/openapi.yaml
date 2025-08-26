@@ -1,0 +1,191 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Go Webservice API",
+    "description": "Simple Go webservice with echo endpoint",
+    "version": "0.0.0",
+    "contact": {
+      "name": "API Support"
+    }
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080",
+      "description": "Development api"
+    },
+    {
+      "url": "http://localhost:8888/api/",
+      "description": "Tyk Gateway"
+    }
+  ],
+  "paths": {
+    "/echo": {
+      "post": {
+        "summary": "Echo endpoint",
+        "description": "Accepts a message and returns the same message",
+        "operationId": "echo",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/EchoRequest"
+              },
+              "examples": {
+                "simple": {
+                  "summary": "Simple echo request",
+                  "value": {
+                    "message": "Hello, World!"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Successful response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/EchoResponse"
+                },
+                "examples": {
+                  "success": {
+                    "summary": "Successful echo response",
+                    "value": {
+                      "message": "Hello, World!"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Bad request",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "validation_error": {
+                    "summary": "Validation error",
+                    "value": {
+                      "error": "message must be between 3 and 32 characters"
+                    }
+                  },
+                  "invalid_json": {
+                    "summary": "Invalid JSON format",
+                    "value": {
+                      "error": "Invalid JSON format"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Internal api error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ErrorResponse"
+                },
+                "examples": {
+                  "server_error": {
+                    "summary": "Server error",
+                    "value": {
+                      "error": "Internal api error"
+                    }
+                  }
+                }
+              }
+            }
+          }
+        },
+        "tags": [
+          "echo"
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "EchoRequest": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "The message to echo back",
+            "minLength": 3,
+            "maxLength": 32,
+            "example": "Hello, World!"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "EchoResponse": {
+        "type": "object",
+        "properties": {
+          "message": {
+            "type": "string",
+            "description": "The echoed message",
+            "example": "Hello, World!"
+          }
+        },
+        "required": [
+          "message"
+        ]
+      },
+      "ErrorResponse": {
+        "type": "object",
+        "properties": {
+          "error": {
+            "type": "string",
+            "description": "Error message describing what went wrong",
+            "example": "message field is required"
+          }
+        },
+        "required": [
+          "error"
+        ]
+      }
+    }
+  },
+  "tags": [
+    {
+      "name": "echo",
+      "description": "Echo operations"
+    }
+  ],
+  "x-tyk-api-gateway": {
+    "info": {
+      "name": "go-webservice-api",
+      "id": "go-webservice-api",
+      "state": {
+        "active": true
+      }
+    },
+    "upstream": {
+      "url": "http://go-webservice:8080"
+    },
+    "server": {
+      "listenPath": {
+        "value": "/api/",
+        "strip": true
+      }
+    },
+    "middleware": {
+      "operations": {
+        "echo": {
+          "validateRequest": {
+            "enabled": true
+          }
+        }
+      }
+    }
+  }
+}

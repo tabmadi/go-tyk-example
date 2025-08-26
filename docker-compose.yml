@@ -21,8 +21,10 @@ services:
       - TYK_GW_STORAGE_ADDRS=tyk-redis:6379
       - TYK_GW_ENABLEAPI=true
       - TYK_GW_CONTROLAPIPORT=9696
+      - TYK_GW_HIDEGENERATORHEADER=true
+      - TYK_GW_TEMPLATEPATH=/opt/tyk-gateway/templates
     volumes:
-      - ./tyk/apps:/opt/tyk-gateway/apps
+      - ./configs/tyk/templates:/opt/tyk-gateway/templates
     depends_on:
       tyk-redis:
         condition: service_healthy
